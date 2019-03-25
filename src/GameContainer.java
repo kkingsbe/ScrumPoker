@@ -20,11 +20,12 @@ public class GameContainer{
     {
         this.maxGames = maxGames;
     }
-    public boolean newGame(String gameId, String gameName, String description, Game.CardSequence sequence)
+    public boolean newGame(String gameName, String description, Game.CardSequence sequence)
     {
         // Creates new game if not at capacity
         if(numGames() < maxGames)
         {
+            String gameId = Integer.toString(games.size());
             games.add(new Game(gameId, gameName, description, sequence));
             return true;
         } else return false;
