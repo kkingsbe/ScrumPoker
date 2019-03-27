@@ -65,4 +65,17 @@ public class Game {
     {
         this.maxPlayers = maxPlayers;
     }
+    public boolean allVoted()
+    {
+        boolean allVoted = true;
+        for(Player player : players)
+            if(player.getDesiredTime().equals("none"))
+                allVoted = false;
+        return allVoted;
+    }
+    public void resetVotes()
+    {
+        for(Player player : players)
+            player.resetVote();
+    }
 }

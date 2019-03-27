@@ -42,4 +42,9 @@ public class GameContainer{
             if(game.getName().equals(gameName)) return game;
         return null;
     }
+    public void deleteGame(String gameId)
+    {
+        Game game = getGame(gameId);
+        games.remove(game);
+    }
 }
