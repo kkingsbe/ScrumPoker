@@ -1,21 +1,21 @@
 import java.util.ArrayList;
 
 public class Game {
-    public enum CardSequence
+    public enum CardSequence //different card sequence types
     {
         FIBONACHI,
         POWERSTEN,
         NUMERICAL,
         POWERSTWO
     }
-    private String gameName;
+    private String gameName; //declares variables that will be used
     private String gameId;
     private String description;
     private int maxPlayers;
     private ArrayList<Player> players = new ArrayList<>();
     private CardSequence cardSequence;
 
-    public Game(String gameId, String gameName, String description, CardSequence sequence)
+    public Game(String gameId, String gameName, String description, CardSequence sequence) //constructs game
     {
         cardSequence = sequence;
         this.gameName = gameName;

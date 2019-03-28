@@ -4,19 +4,19 @@ public class GameContainer{
     private ArrayList<Game> games = new ArrayList<>();
     private int maxGames; //The maximum number of concurrent games (leave as null or zero infinite games)
 
-    public GameContainer(int maxGames)
+    public GameContainer(int maxGames) //sets max games
     {
         if(maxGames > 0) this.maxGames = maxGames;
     }
-    public int numGames()
+    public int numGames() 
     {
         return games.size();
     }
-    public int getMaxGames()
+    public int getMaxGames() //gets the max games
     {
         return maxGames;
     }
-    public void setMaxGames(int maxGames)
+    public void setMaxGames(int maxGames) //sets max games
     {
         this.maxGames = maxGames;
     }
