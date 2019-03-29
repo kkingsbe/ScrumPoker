@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Game {
     public enum CardSequence //different card sequence types
     {
-        FIBONACHI,
+        FIBONACCI,
         POWERSTEN,
         NUMERICAL,
         POWERSTWO
@@ -13,6 +13,7 @@ public class Game {
     private String description;
     private int maxPlayers;
     private ArrayList<Player> players = new ArrayList<>();
+    private String[] values;
     private CardSequence cardSequence;
 
     public Game(String gameId, String gameName, String description, CardSequence sequence) //constructs game
@@ -21,6 +22,22 @@ public class Game {
         this.gameName = gameName;
         this.description = description;
         this.gameId = gameId;
+
+        switch(sequence)
+        {
+            case FIBONACCI:
+                values = CardSequenceVals.fibonacci;
+                break;
+            case POWERSTEN:
+                values = CardSequenceVals.powersTen;
+                break;
+            case NUMERICAL:
+                values = CardSequenceVals.numerical;
+                break;
+            case POWERSTWO:
+                values = CardSequenceVals.powersTwo;
+                break;
+        }
     }
     public void addPlayer(Player player)
     {
@@ -64,5 +81,18 @@ public class Game {
     public void setMaxPlayers(int maxPlayers)
     {
         this.maxPlayers = maxPlayers;
+    }
+    public boolean allVoted()
+    {
+        boolean allVoted = true;
+        for(Player player : players)
+            if(player.getDesiredTime().equals("none"))
+                allVoted = false;
+        return allVoted;
+    }
+    public void resetVotes()
+    {
+        for(Player player : players)
+            player.resetVote();
     }
 }

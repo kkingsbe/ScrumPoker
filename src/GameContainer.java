@@ -20,14 +20,15 @@ public class GameContainer{
     {
         this.maxGames = maxGames;
     }
-    public boolean newGame(String gameId, String gameName, String description, Game.CardSequence sequence)
+    public String newGame(String gameName, String description, Game.CardSequence sequence)
     {
         // Creates new game if not at capacity
         if(numGames() < maxGames)
         {
+            String gameId = Integer.toString(games.size());
             games.add(new Game(gameId, gameName, description, sequence));
-            return true;
-        } else return false;
+            return gameId;
+        } else return "";
     }
     public Game getGame(String gameId) //Returns game based on id
     {
@@ -40,5 +41,10 @@ public class GameContainer{
         for(Game game : games)
             if(game.getName().equals(gameName)) return game;
         return null;
+    }
+    public void deleteGame(String gameId)
+    {
+        Game game = getGame(gameId);
+        games.remove(game);
     }
 }
