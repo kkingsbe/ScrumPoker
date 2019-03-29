@@ -1,0 +1,94 @@
+#loader {
+    position: absolute;
+    left: 49%;
+    top: 42.5%;
+    z-index: 1;
+    width: 2vw;
+    height: 15vw;
+    background-color:#795794;
+
+    /* border-top: 16px solid */
+
+    -webkit-animation: spin 2s ease-in-out infinite;
+    animation: spin 2s ease-in-out infinite;
+}
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+@-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 }
+    to { bottom:0px; opacity:1 }
+}
+@keyframes animatebottom {
+    from{ bottom:-100px; opacity:0 }
+    to{ bottom:0; opacity:1 }
+}
+#myDiv {
+    display: none;
+    text-align: center;
+}
+.arrowup{
+    left:0%;
+    height:auto;
+    width:4%;
+}
+.overlay{
+    z-index:2;
+    position:absolute;
+    top:80px;
+    left:80px;
+    opacity:0;
+}
+.overlaytext{
+    color:white;
+
+
+}
+.fade-in-image:hover{
+    animation: hover 3s;
+    opacity:.5;
+}
+img:hover~#overlay1{
+    animation: fade-in-text 3s;
+}
+@keyframes fade-in-text{
+    0%{opacity: 0;}
+    100%{opacity:1;}
+}
+@keyframes hover{
+    0%{opacity: 1;}
+    100%{opacity:0.5;}
+}
+img:hover ~ #overlay1{
+    opacity:1;
+
+}
+.background{
+    background-color:black;
+    height: 100%;
+}
+.under{
+
+}
+.lowertext{
+    float:top;
+
+}
+p{
+    color: white;
+}
+h2{
+    color:white;
+}
