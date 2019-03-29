@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="df2e570f-84ab-4abd-8458-0de8d24eea9f" name="aws" url="http://75.101.200.70">
+        <fileTransfer host="75.101.200.70" port="22" privateKey="D:\Noah\Documents\Downloads\multiplayerServer.ppk" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

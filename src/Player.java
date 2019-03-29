@@ -10,21 +10,21 @@ public class Player {
     {
         return userName;
     }
-    public void setUserName(String userName)
+    public void setUserName(String userName) //sets/gets username
     {
         this.userName = userName;
     }
     public String getUserName() {
         return userName;
     }
-    public String getDesiredTime() {
+    public String getDesiredTime() { //gets votes
         return desiredTime;
     }
-    public void setDesiredTime(String time)
+    public void setDesiredTime(String time) //votes
     {
         desiredTime = time;
     }
-    public void resetVote()
+    public void resetVote() //restarts the vote
     {
         desiredTime = "none";
     }
