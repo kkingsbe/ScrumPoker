@@ -27,5 +27,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.5.39" level="application_server_libraries" />
+    <orderEntry type="library" name="org.apache.commons:commons-csv:1.5" level="project" />
   </component>
 </module>

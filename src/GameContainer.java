@@ -1,12 +1,19 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameContainer{
     private ArrayList<Game> games = new ArrayList<>();
     private int maxGames; //The maximum number of concurrent games (leave as null or zero infinite games)
+    private DataLogger dataLogger;
 
-    public GameContainer(int maxGames) //sets max games
+    public GameContainer(int maxGames, DataLogger dataLogger) throws IOException //sets max games
     {
         if(maxGames > 0) this.maxGames = maxGames;
+        this.dataLogger = dataLogger;
+    }
+    public DataLogger getDataLogger()
+    {
+        return dataLogger;
     }
     public int numGames() 
     {
@@ -26,7 +33,8 @@ public class GameContainer{
         if(numGames() < maxGames)
         {
             String gameId = Integer.toString(games.size());
-            games.add(new Game(gameId, gameName, description, sequence));
+            games.add(new Game(gameId, gameName, description, sequence, dataLogger));
+            dataLogger.newSession();
             return gameId;
         } else return "";
     }
@@ -45,6 +53,8 @@ public class GameContainer{
     public void deleteGame(String gameId)
     {
         Game game = getGame(gameId);
+        for(int player = 0; player < game.getPlayers().size(); player ++) dataLogger.deleteActivePlayer();
         games.remove(game);
+        dataLogger.deleteSession();
     }
 }

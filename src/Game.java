@@ -15,13 +15,15 @@ public class Game {
     private ArrayList<Player> players = new ArrayList<>();
     private String[] values;
     private CardSequence cardSequence;
+    private DataLogger dataLogger;
 
-    public Game(String gameId, String gameName, String description, CardSequence sequence) //constructs game
+    public Game(String gameId, String gameName, String description, CardSequence sequence, DataLogger dataLogger) //constructs game
     {
         cardSequence = sequence;
         this.gameName = gameName;
         this.description = description;
         this.gameId = gameId;
+        this.dataLogger = dataLogger;
 
         switch(sequence)
         {
@@ -41,7 +43,8 @@ public class Game {
     }
     public void addPlayer(Player player)
     {
-        players.add(player);
+        if(players.size() < maxPlayers) players.add(player);
+        dataLogger.newPlayer();
     }
     public Player getPlayer(String username)
     {
@@ -73,6 +76,10 @@ public class Game {
     public String getName()
     {
         return gameName;
+    }
+    public ArrayList<Player> getPlayers()
+    {
+        return players;
     }
     public int getMaxPlayers()
     {
