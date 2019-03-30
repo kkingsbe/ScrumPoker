@@ -2,59 +2,52 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameContainer{
-    private ArrayList<Game> games = new ArrayList<>();
-    private int maxGames; //The maximum number of concurrent games (leave as null or zero infinite games)
-    private DataLogger dataLogger;
-
-    public GameContainer(int maxGames, DataLogger dataLogger) throws IOException //sets max games
-    {
-        if(maxGames > 0) this.maxGames = maxGames;
-        this.dataLogger = dataLogger;
+    private static ArrayList<Game> games = new ArrayList<>();
+    private static DataLogger dataLogger;
+    static {
+        try {
+            dataLogger = new DataLogger();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public DataLogger getDataLogger()
+    public static DataLogger getDataLogger()
     {
         return dataLogger;
     }
-    public int numGames()
+    public static int numGames()
     {
         return games.size();
     }
-    public int getMaxGames() //gets the max games
+    public static String newGame(String gameName, String description, Game.CardSequence sequence)
     {
-        return maxGames;
+        String gameId = Integer.toString(games.size());
+        games.add(new Game(gameId, gameName, description, sequence, dataLogger));
+        dataLogger.newSession();
+        return gameId;
     }
-    public void setMaxGames(int maxGames) //sets max games
-    {
-        this.maxGames = maxGames;
-    }
-    public String newGame(String gameName, String description, Game.CardSequence sequence)
-    {
-        // Creates new game if not at capacity
-        if(numGames() < maxGames)
-        {
-            String gameId = Integer.toString(games.size());
-            games.add(new Game(gameId, gameName, description, sequence, dataLogger));
-            dataLogger.newSession();
-            return gameId;
-        } else return "";
-    }
-    public Game getGame(String gameId) //Returns game based on id
+    public static Game getGame(String gameId) //Returns game based on id
     {
         for(Game game : games)
             if(game.getGameId().equals(gameId)) return game;
         return null;
     }
-    public Game getGameFromName(String gameName) //Returns game based on name
+    public static Game getGameFromName(String gameName) //Returns game based on name
     {
         for(Game game : games)
             if(game.getName().equals(gameName)) return game;
         return null;
     }
-    public void deleteGame(String gameId)
+    public static void deleteGame(String gameId)
     {
         Game game = getGame(gameId);
         for(int player = 0; player < game.getPlayers().size(); player ++) dataLogger.deleteActivePlayer();
         games.remove(game);
         dataLogger.deleteSession();
     }
+    public static Player getPlayer(String username, String gameId)
+    {
+        return(getGame(gameId).getPlayer(username));
+    }
+    public static
 }
