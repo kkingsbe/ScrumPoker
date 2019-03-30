@@ -8,7 +8,7 @@ public class GameContainer{
     {
         if(maxGames > 0) this.maxGames = maxGames;
     }
-    public int numGames() 
+    public int numGames()
     {
         return games.size();
     }
