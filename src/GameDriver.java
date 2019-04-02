@@ -149,9 +149,8 @@ public class GameDriver {
         }
         return name;
     }
-    public static void deleteGame(String id)
+    public static void deleteGame(String name)
     {
-        String name = getGameNameFromId(id);
         String sql = "DELETE FROM games WHERE name = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
@@ -168,9 +167,8 @@ public class GameDriver {
             System.out.println(e.getMessage());
         }
     }
-    public static void placeVote(String id, String playerName, String vote)
+    public static void placeVote(String name, String playerName, String vote)
     {
-        String name = getGameNameFromId(id);
         String sql = "INSERT INTO " + name + "(playerName,vote) VALUES(?,?)";
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             DatabaseMetaData md = conn.getMetaData();
@@ -182,10 +180,8 @@ public class GameDriver {
             e.printStackTrace();
         }
     }
-    public static void resetVotes(String id)
+    public static void resetVotes(String name)
     {
-        String name = getGameNameFromId(id);
-
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             String sql = "DELETE FROM " + name;
             PreparedStatement psmt = conn.prepareStatement(sql);
@@ -195,17 +191,16 @@ public class GameDriver {
             System.out.println(e.getMessage());
         }
     }
-    public static void addPlayer(String id, String playerName)
+    public static void addPlayer(String name, String playerName)
     {
-        placeVote(id, playerName, "none");
+        placeVote(name, playerName, "none");
     }
-    public static ArrayList<String> getPlayers(String id)
+    public static ArrayList<String> getPlayers(String name)
     {
-        String game = getGameNameFromId(id);
         ArrayList<String> names = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             DatabaseMetaData md = conn.getMetaData();
-            String sql = "SELECT playerName FROM " + game;
+            String sql = "SELECT playerName FROM " + name;
 
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
