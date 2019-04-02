@@ -44,7 +44,7 @@
                 }
                 for(int k = 0; k < playerVotes.length; k++){
                     %><p><%= playerVotes[k][0]%>: <%= playerVotes[k][1]%></p>
-                }
+                <%}%>
             </div>
         </div>
     </div>
