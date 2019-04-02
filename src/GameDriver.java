@@ -3,12 +3,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class GameDriver {
-
+    //----------------------------------------------------------------------------
+    //MAKE SURE YOU HAVE INSTALLED THE JDBC DRIVER FROM https://bitbucket.org/xerial/sqlite-jdbc/downloads/
+    //----------------------------------------------------------------------------
     // JDBC driver name and database URL
     //static final String DB_URL = "jdbc:sqlite:home/databases/";
-    static final String DB_URL = "jdbc:sqlite:C:\\users\\sking\\documents\\games.db";
+    static final String DB_URL = "jdbc:sqlite:C:\\users\\kkingsbe\\documents\\games.db";
 
-    public static void setupDb() throws ClassNotFoundException {
+    public static void setupDb() {
         createIfDoesntExist();
     }
     public static void createIfDoesntExist()
@@ -21,7 +23,21 @@ public class GameDriver {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("Creating games lookup table...");
+                System.out.println("Creating games lookup table if it doesn't already exist...");
+                String sql = "CREATE TABLE IF NOT EXISTS games(\n"
+                        + "	name text PRIMARY KEY,\n"
+                        + "	description text NOT NULL,\n"
+                        + " sequenceType text NOT NULL, \n"
+                        + "	capacity real\n"
+                        + ");";
+
+                try (Statement stmt = conn.createStatement()) {
+                    // create a new table
+                    stmt.execute(sql);
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+                System.out.println("Successfully created games lookup table!");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -54,6 +70,19 @@ public class GameDriver {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        sql = "INSERT INTO games(name,description,sequenceType) VALUES(?,?,?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.setString(3, sequenceType);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        if(success) System.out.println("Successfully created game: " + name + "!");
         return success;
     }
     public static ArrayList<String> getGames()
