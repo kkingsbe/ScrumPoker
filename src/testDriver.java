@@ -1,3 +1,5 @@
+import GamePackage.GameDriver;
+
 public class testDriver {
     public static void main(String[] args) {
         GameDriver.setupDb();

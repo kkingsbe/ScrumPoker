@@ -1,3 +1,5 @@
+package GamePackage;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -41,7 +43,7 @@ public class GameDriver {
             System.out.println(e.getMessage());
         }
     }
-    public static boolean newGame(String name, String description, String sequenceType)
+    public static String newGame(String name, String description, String sequenceType)
     {
         //None of the fields can contain spaces, underscores, hyphens, or any special characters
         System.out.println("Checking if game name exists...");
@@ -52,7 +54,7 @@ public class GameDriver {
         {
             success = false;
             System.out.println("Game name already exists :(");
-            return success;
+            return "None";
         }
 
         // SQL statement for creating a new table
@@ -71,10 +73,12 @@ public class GameDriver {
 
         sql = "INSERT INTO games(name,id,description,sequenceType) VALUES(?,?,?,?)";
 
+        String id = getFreeGameId();
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
-            pstmt.setString(2, getFreeGameId());
+            pstmt.setString(2, id);
             pstmt.setString(3, description);
             pstmt.setString(4, sequenceType);
             pstmt.executeUpdate();
@@ -82,7 +86,7 @@ public class GameDriver {
             System.out.println(e.getMessage());
         }
         if(success) System.out.println("Successfully created game: " + name + "!");
-        return success;
+        return id;
     }
     public static ArrayList<String> getGameIds()
     {
