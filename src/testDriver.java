@@ -1,24 +1,16 @@
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class testDriver {
-    public static void main(String[] args) throws IOException {
-        DataLogger dataLogger = new DataLogger();
-        GameContainer container = new GameContainer(1000, dataLogger);
-        String gameId = container.newGame("Test Game", "Test game to verify shit works", Game.CardSequence.FIBONACCI);
-        System.out.println("Game created with id: " + gameId);
-
-        Player player1 = new Player("Kyle"); //creates players
-        Player player2 = new Player("Johnny");
-
-        container.getGame(gameId).addPlayer(player1);
-        container.getGame(gameId).addPlayer(player2);
-
-        player1.setDesiredTime("5"); //adds the desired times
-        player2.setDesiredTime("5");
-
-        ArrayList<String> times = container.getGame("0").getTimes();
-
-        System.out.println("done bitch");
+    public static void main(String[] args) {
+        GameDriver.setupDb();
+        GameDriver.newGame("Test_game", "Description for test game", "powerstwo");
+        GameDriver.newGame("Test_game_two", "Description for test game", "powerstwo");
+        GameDriver.newGame("Test_game_three", "Description for test game", "powerstwo");
+        System.out.println(GameDriver.getGameNameFromId("0"));
+        System.out.println(GameDriver.getGameNameFromId("1"));
+        System.out.println(GameDriver.getGameNameFromId("2"));
+        GameDriver.resetVotes("0");
+        GameDriver.addPlayer("0", "Kyle");
+        GameDriver.placeVote("0","kyle","10");
+        System.out.println(GameDriver.getPlayers("0"));
+        GameDriver.deleteGame("0");
     }
 }
