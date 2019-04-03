@@ -8,7 +8,7 @@ public class GameDriver {
     //MAKE SURE YOU HAVE INSTALLED THE JDBC DRIVER FROM https://bitbucket.org/xerial/sqlite-jdbc/downloads/
     //----------------------------------------------------------------------------
     //static final String DB_URL = "jdbc:sqlite:home/databases/";
-    static final String DB_URL = "jdbc:sqlite:C:\\users\\sking\\documents\\games.db"; //Database location
+    static final String DB_URL = "jdbc:sqlite:C:\\users\\kkingsbe\\documents\\games.db"; //Database location
 
     public static void setupDb() {
         createIfDoesntExist();
@@ -56,6 +56,8 @@ public class GameDriver {
             System.out.println("Game name already exists :(");
             return "None";
         }
+
+        System.out.println("Game name is not in use :)");
 
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS " + name + "(\n"
@@ -173,31 +175,60 @@ public class GameDriver {
     }
     public static void placeVote(String name, String playerName, String vote)
     {
-        String sql = "INSERT INTO " + name + "(playerName,vote) VALUES(?,?)";
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            DatabaseMetaData md = conn.getMetaData();
-            PreparedStatement psmt = conn.prepareStatement(sql);
-            psmt.setString(1, playerName);
-            psmt.setString(2, vote);
-            psmt.executeUpdate();
+        System.out.println("Placing vote for " + playerName + " in game " + name + "...");
+        String sql = "UPDATE " + name + " SET vote = ? "
+                + "WHERE playerName = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // set the corresponding param
+            pstmt.setString(1, vote);
+            pstmt.setString(2, playerName);
+            // update
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
+        System.out.println("Successfully placed vote!");
     }
     public static void resetVotes(String name)
     {
-        try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            String sql = "DELETE FROM " + name;
-            PreparedStatement psmt = conn.prepareStatement(sql);
-            psmt.executeUpdate();
-            System.out.println("Reset the votes from the " + name + "game");
+        ArrayList<String> players = getPlayers(name);
+        String sql = "UPDATE " + name + " SET vote = ? "
+                + "WHERE playerName = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            for(String player : players)
+            {
+                // set the corresponding param
+                pstmt.setString(1, "Not Voted");
+                pstmt.setString(2, player);
+                // update
+                pstmt.executeUpdate();
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
     public static void addPlayer(String name, String playerName)
     {
-        placeVote(name, playerName, "none");
+        System.out.println("Adding player " + playerName + " to game " + name + "...");
+
+        String sql = "INSERT INTO " + name + "(playerName,vote) VALUES(?,?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            DatabaseMetaData md = conn.getMetaData();
+            PreparedStatement psmt = conn.prepareStatement(sql);
+            psmt.setString(1, playerName);
+            psmt.setString(2, "Not Voted");
+            psmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Successfully added player!");
     }
     public static ArrayList<String> getPlayers(String name)
     {
@@ -217,5 +248,27 @@ public class GameDriver {
             e.printStackTrace();
         }
         return names;
+    }
+    public static ArrayList<String[]> getVotes(String name)
+    {
+        ArrayList<String[]> votes = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            DatabaseMetaData md = conn.getMetaData();
+            String sql = "SELECT playerName, vote FROM " + name;
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // loop through the result set
+            while (rs.next()) {
+                String[] player = new String[2];
+                player[0] = rs.getString("playerName");
+                player[1] = rs.getString("vote");
+                votes.add(player);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return votes;
     }
 }
