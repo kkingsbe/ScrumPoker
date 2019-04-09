@@ -42,8 +42,8 @@
                         <form action="joinGame" method="post">
                             <p>Username:</p>
                             <input type="text" name="username">
-                            <p>Game ID:</p>
-                            <input type="text" name="gameid"><br><br>
+                            <p>Gamename:</p>
+                            <input type="text" name="gamename"><br><br>
 
                             <input type="submit" value="Join Game">
                         </form>

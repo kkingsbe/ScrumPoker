@@ -34,14 +34,15 @@
         <div class="card-img-overlay" style=" ">
             <h4 class="card-title" style="text-align:center; top:7%; color:white; font-size:500%;"><%= request.getParameter("username")%></h4>
             <div class="container lowertext">
-                <h3>Players: </h3><%
-                players = GameDriver.getPlayers(request.getParameter("gamename"));
-                for(String player: players){%>
-                    <p><%= player%></p>
-                <%}%>
-                <form action="http://75.101.200.70/ServletTest/beginVote" method="post">
+                <form action="http://75.101.200.70/ServletTest/endVote" method="post">
                     <input type="hidden" id ="username" name="username" value=${username}>
                     <input type="hidden" id ="gamename" name="gamename" value=${gamename}>
+                    <input type="radio" name="vote" value="1" checked> 1<br>
+                    <input type="radio" name="vote" value="2"> 2<br>
+                    <input type="radio" name="vote" value="3"> 3<br>
+                    <input type="radio" name="vote" value="5"> 5<br>
+                    <input type="radio" name="vote" value="8"> 8<br>
+                    <input type="radio" name="vote" value="13">13
                     <input type="submit" value="Submit">
                 </form>
             </div>
@@ -56,7 +57,7 @@
     function showPage() {
         document.getElementById("loader").style.display = "none";
         document.getElementById("myDiv").style.display = "block";
-        myVar =setTimeout(reload(), 1000)
+        //myVar =setTimeout(reload(), 1000)
     }
     function reload(){
 

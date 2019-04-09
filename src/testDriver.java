@@ -1,5 +1,7 @@
+import GamePackage.GameDriver;
+
 public class testDriver {
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) {
         GameDriver.setupDb();
         GameDriver.newGame("Test_game", "Description for test game", "powerstwo");
         GameDriver.newGame("Test_game_two", "Description for test game", "powerstwo");

@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "createGame", urlPatterns = "/createGame")
-public class createGame extends HttpServlet {
+@WebServlet(name = "JoinGame", urlPatterns = "/joinGame")
+public class JoinGame extends HttpServlet {
+    @SuppressWarnings("Duplicates")
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username;
         String gamename;
@@ -18,7 +19,6 @@ public class createGame extends HttpServlet {
         username = request.getParameter("username");
         gamename = request.getParameter("gamename");
         description = request.getParameter("description");
-        GameDriver.newGame(gamename, description, "FIBONACCI");
         GameDriver.addPlayer(gamename, username);
         ArrayList<String> players =  new ArrayList<String>();
         players = GameDriver.getPlayers(request.getParameter("gamename"));
