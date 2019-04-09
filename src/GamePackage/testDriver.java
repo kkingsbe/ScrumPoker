@@ -1,4 +1,4 @@
-import GamePackage.GameDriver;
+package GamePackage;
 
 public class testDriver {
     public static void main(String[] args) {
