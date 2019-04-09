@@ -23,6 +23,7 @@ public class createGame extends HttpServlet {
         ArrayList<String> players =  new ArrayList<String>();
         players = GameDriver.getPlayers(request.getParameter("gamename"));
         request.setAttribute("players", players);
+        GameDriver.setupDb();
         response.setContentType("text/html");
         RequestDispatcher dispatcher = request.getRequestDispatcher("gameHome.jsp");
         dispatcher.forward(request, response);

@@ -1,3 +1,5 @@
+import GamePackage.GameDriver;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ public class home extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        GameDriver.createDb();
         response.setContentType("text/html");
         RequestDispatcher dispatcher = request.getRequestDispatcher("homePage.jsp");
         dispatcher.forward(request, response);

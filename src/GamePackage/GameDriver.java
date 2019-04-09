@@ -8,7 +8,7 @@ public class GameDriver {
     //MAKE SURE YOU HAVE INSTALLED THE JDBC DRIVER FROM https://bitbucket.org/xerial/sqlite-jdbc/downloads/
     //----------------------------------------------------------------------------
     //static final String DB_URL = "jdbc:sqlite:home/databases/";
-    static final String DB_URL = "jdbc:sqlite:C:\\users\\kkingsbe\\documents\\games.db"; //Database location
+    static final String DB_URL = "jdbc:sqlite:D:\\Noah\\Documents\\games.db"; //Database location
 
     public static void setupDb() {
         createIfDoesntExist();

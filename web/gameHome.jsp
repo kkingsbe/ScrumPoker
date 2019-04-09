@@ -21,10 +21,12 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="gameHomeJS.js"></script>
     <title></title>
 
 </head>
 <%! ArrayList<String> players = new ArrayList<String>();%>
+<%! String player = "null"; %>
 <body onload="showPage()">
 <div id="loader"></div>
 <div id="dot"></div>
@@ -33,8 +35,9 @@
         <img class="img-fluid  background underlay" src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/jVhILry/smoke-abstract-background-4k_n1v1jgbxe__F0005.png" >
         <div class="card-img-overlay" style=" ">
             <h4 class="card-title" style="text-align:center; top:7%; color:white; font-size:500%;"><%= request.getParameter("username")%></h4>
-            <div class="container lowertext">
+            <div class="container lowertext" id="refresh">
                 <h3>Players: </h3><%
+                ArrayList<String> players = new ArrayList<String>();
                 players = GameDriver.getPlayers(request.getParameter("gamename"));
                 for(String player: players){%>
                     <p><%= player%></p>
@@ -50,19 +53,6 @@
 
 
 </div>
-<script>
-    var myVar;
-    //function myFunction() {myVar = setTimeout(showPage, 1000);}
-    function showPage() {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("myDiv").style.display = "block";
-        myVar =setTimeout(reload(), 1000)
-    }
-    function reload(){
 
-        location.reload()
-    }
-
-</script>
 </body>
 </html>
